@@ -1,0 +1,11 @@
+{
+    "yes":    "√",
+    "no":     "×",
+    "like":   "♥",
+    "unlike": " ",
+    "lock":   "$",
+    "empty":  " ",
+    "ac":     "O",
+    "notac":  "X",
+    "none":   "o"
+}
