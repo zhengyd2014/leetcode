@@ -67,7 +67,7 @@ class Solution {
 		Queue<String> fromEnd = new LinkedList<>();
 		fromEnd.offer(endWord);
 		visited.add(endWord);
-		while (!fromBegin.isEmpty()  && fromEnd.isEmpty()) {
+		while (!fromBegin.isEmpty()  && !fromEnd.isEmpty()) {
 			int size = fromBegin.size();
 			steps++;
 			for (int i = 0; i < size; i++) {
