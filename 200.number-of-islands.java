@@ -39,10 +39,9 @@ class Solution {
 				}
 			}
 		}	
-		return count;	
+		return count;
     }
 
-	int[][] direction = new int[][] { {1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 	private void dfs(char[][] grid, int r, int c) {
 		if (r < 0 || r >= grid.length || c < 0 || c >= grid[0].length || grid[r][c] == '0') {
 			return;
