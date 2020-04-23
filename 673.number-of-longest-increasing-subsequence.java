@@ -45,8 +45,6 @@
 // @lc code=start
 class Solution {
 
-    int longest = 1;
-    int count = 1;
     public int findNumberOfLIS(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
 
