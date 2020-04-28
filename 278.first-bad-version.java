@@ -49,16 +49,19 @@ public class Solution extends VersionControl {
 
         int left = 1;
         int right = n;
-        while (left <= right) {
+        while (left + 1 < right) {
             int mid = left + (right - left) / 2;
             if (isBadVersion(mid)) {
-                right = mid - 1;
+                right = mid;
             } else {
-                left = mid + 1;
+                left = mid;
             }
         }
 
-        return left;
+        if (isBadVersion(left)) return left;
+        if (isBadVersion(right)) return right;
+
+        return 0;
     }
 }
 // @lc code=end

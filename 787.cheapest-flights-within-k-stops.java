@@ -62,8 +62,49 @@
 
 // @lc code=start
 class Solution {
+
+    Map<Integer, List<int[]>> graph = new HashMap();
+
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
-        
+        buildGraph(n, flights);
+
+        Queue<int[]> q = new LinkedList();
+        q.offer(new int[] {src, 0});
+        int ans = Integer.MAX_VALUE;
+        int step = 0;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int[] node = q.poll();
+                int city = node[0];
+                int cost = node[1];
+                System.out.println("working on city: " + city + " with cost: " + cost);
+                if (city == dst) {
+                    ans = Math.min(ans, cost);
+                }
+
+                if (!graph.containsKey(city)) continue;
+                for (int[] neighbor : graph.get(city)) {
+                    if (neighbor[1] + cost > ans) continue;
+                    q.offer(new int[] {neighbor[0], neighbor[1] + cost});
+                    System.out.println("insert into queue, city: " + neighbor[0] + ", cost:" + (neighbor[1] + cost));
+                }
+            }
+
+            if (step > K) break;
+            step++;
+        }
+
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+
+    private void buildGraph(int n, int[][] flights) {
+        for (int[] flight : flights) {
+            graph.putIfAbsent(flight[0], new ArrayList<int[]>());
+            graph.get(flight[0]).add(new int[] {flight[1], flight[2]});
+            System.out.println("insert into graph: src: " + flight[0] + ", edge: " + flight[1] + ", " + flight[2]);
+        }
     }
 }
 // @lc code=end
