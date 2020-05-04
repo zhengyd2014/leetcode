@@ -1,0 +1,106 @@
+/*
+ * @lc app=leetcode id=1219 lang=java
+ *
+ * [1219] Path with Maximum Gold
+ *
+ * https://leetcode.com/problems/path-with-maximum-gold/description/
+ *
+ * algorithms
+ * Medium (63.83%)
+ * Likes:    374
+ * Dislikes: 18
+ * Total Accepted:    23.4K
+ * Total Submissions: 36.5K
+ * Testcase Example:  '[[0,6,0],[5,8,7],[0,9,0]]'
+ *
+ * In a gold mine grid of size m * n, each cell in this mine has an integer
+ * representing the amount of gold in that cell, 0 if it is empty.
+ * 
+ * Return the maximum amount of gold you can collect under the
+ * conditions:
+ * 
+ * 
+ * Every time you are located in a cell you will collect all the gold in that
+ * cell.
+ * From your position you can walk one step to the left, right, up or down.
+ * You can't visit the same cell more than once.
+ * Never visit a cell with 0 gold.
+ * You can start and stop collecting gold from any position in the grid that
+ * has some gold.
+ * 
+ * 
+ * 
+ * Example 1:
+ * 
+ * 
+ * Input: grid = [[0,6,0],[5,8,7],[0,9,0]]
+ * Output: 24
+ * Explanation:
+ * [[0,6,0],
+ * ⁠[5,8,7],
+ * ⁠[0,9,0]]
+ * Path to get the maximum gold, 9 -> 8 -> 7.
+ * 
+ * 
+ * Example 2:
+ * 
+ * 
+ * Input: grid = [[1,0,7],[2,0,6],[3,4,5],[0,3,0],[9,0,20]]
+ * Output: 28
+ * Explanation:
+ * [[1,0,7],
+ * ⁠[2,0,6],
+ * ⁠[3,4,5],
+ * ⁠[0,3,0],
+ * ⁠[9,0,20]]
+ * Path to get the maximum gold, 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7.
+ * 
+ * 
+ * 
+ * Constraints:
+ * 
+ * 
+ * 1 <= grid.length, grid[i].length <= 15
+ * 0 <= grid[i][j] <= 100
+ * There are at most 25 cells containing gold.
+ * 
+ */
+
+// @lc code=start
+class Solution {
+    
+    int maxGlod = 0;
+    public int getMaximumGold(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        
+        for (int r = 0; r < m; r++) {
+            for (int c = 0; c < n; c++) {
+                if (grid[r][c] != 0) {
+                    dfs(grid, r, c, 0);
+                }
+            }
+        }
+        
+        return maxGlod;
+    }
+    
+    private void dfs(int[][] grid, int r, int c, int sum) {
+        if (r < 0 || r >= grid.length || c < 0 || c >= grid[0].length) return;
+        if (grid[r][c] == 0) return;
+        
+        int original = grid[r][c];
+        sum += original;
+        grid[r][c] = 0;
+        maxGlod = Math.max(maxGlod, sum);
+        
+        dfs(grid, r+1, c, sum);
+        dfs(grid, r-1, c, sum);
+        dfs(grid, r, c+1, sum);
+        dfs(grid, r, c-1, sum);
+        
+        grid[r][c] = original;
+    }
+}
+// @lc code=end
+

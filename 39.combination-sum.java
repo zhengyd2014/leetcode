@@ -58,22 +58,20 @@ class Solution {
         List<List<Integer>> result = new ArrayList<>();
         if (candidates == null || candidates.length == 0) return result;
         
-        dfs(candidates, 0, target, new ArrayList<Integer>(), 0, result);
+        dfs(candidates, 0, target, new ArrayList<Integer>(), result);
         return result;
     }
 
-    private void dfs(int[] candidates,int start, int target, List<Integer> path, int sum, List<List<Integer>> result) {
-        if (sum > target) return;
-        if (sum == target) {
+    private void dfs(int[] candidates,int start, int target, List<Integer> path, List<List<Integer>> result) {
+        if (target < 0) return;
+        if (target == 0) {
             result.add(new ArrayList<Integer>(path));
             return;
         }
 
         for (int i = start; i < candidates.length; i++) {
             path.add(candidates[i]);
-            sum += candidates[i];
-            dfs(candidates, i, target, path, sum, result);
-            sum -= candidates[i];
+            dfs(candidates, i, target - candidates[i], path, result);
             path.remove(path.size() - 1);
         }
     }
