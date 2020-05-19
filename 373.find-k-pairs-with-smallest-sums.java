@@ -50,6 +50,10 @@
 // @lc code=start
 
 
+// 373. Find K Pairs with Smallest Sums
+
+// pq<int[2]>:   a[0]: index of nums1, a[1]: index of nums2
+// pair of nums1 and nums2 like a m-way merge.
 /*
  *   Input: nums1 = [1,1,2], nums2 = [1,2,3], k = 2
  *        1    2    3

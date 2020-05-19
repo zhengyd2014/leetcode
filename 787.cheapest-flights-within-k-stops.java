@@ -61,6 +61,11 @@
  */
 
 // @lc code=start
+
+// 787. Cheapest Flights Within K Stops
+
+// BFS,  note on pruning
+
 class Solution {
 
     Map<Integer, List<int[]>> graph = new HashMap();

@@ -34,6 +34,12 @@
  * Credits:Special thanks to @dietpepsi for adding this problem and creating
  * all test cases.
  */
+
+ // 313. Super Ugly Number
+
+// same to ugly number, keep a index for each one.
+
+
 class Solution {
     public int nthSuperUglyNumber(int n, int[] primes) {
 		if (n <= 0) {

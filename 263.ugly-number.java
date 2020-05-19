@@ -26,6 +26,11 @@
  * Credits:Special thanks to @jianchao.li.fighter for adding this problem and
  * creating all test cases.
  */
+
+ // 263. Ugly Number
+
+// n % 2 == 0; n / = 2;
+
 class Solution {
     public boolean isUgly(int num) {
 		if (num <= 0) {

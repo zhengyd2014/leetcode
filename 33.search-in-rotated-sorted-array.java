@@ -19,39 +19,31 @@
  * 
  * You may assume no duplicate exists in the array.
  */
+
+ // 33. Search in Rotated Sorted Array
+
+// check the in order half.
+
 class Solution {
     public int search(int[] nums, int target) {
-		if (nums.length == 0) {
-			return -1;
-		}
-
-		int left = 0;
-		int right = nums.length - 1;
-		while (left < right) {
-			int mid = left + (right - left) / 2;
-			if (target == nums[mid]) {
-				return mid;
-			}
-
-			if (nums[mid] < nums[right]) { // right part sorted
-				if (target > nums[mid] && target <= nums[right]) {
-					left = mid + 1;
-				} else {
-					right = mid - 1;
-				}
-			} else {
-				if (target >= nums[left] && target < nums[mid]) {
-					right = mid - 1;
-				} else {
-					left = mid + 1;
-				}
-			}	
-		}
-
-		if (nums[left] == target) {
-			return left;
-		}
-
-		return -1;		
+        if (nums.length == 0) return -1;
+        
+        int l = 0;
+        int h = nums.length - 1;
+        while (l + 1 < h) {
+            int mid = l + (h - l) / 2;
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < nums[h]) {   // right side in order
+                if (nums[mid] < target && target <= nums[h]) l = mid;
+                else h = mid;
+            } else {  // left side in order
+                if (nums[l] <= target && target < nums[mid]) h = mid;
+                else l = mid;
+            }
+        }
+        
+        if (nums[l] == target) return l;
+        if (nums[h] == target) return h;
+        return -1;
     }
 }

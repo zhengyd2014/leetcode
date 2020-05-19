@@ -27,6 +27,12 @@
  * Credits:Special thanks to @jianchao.li.fighter for adding this problem and
  * creating all test cases.
  */
+
+// dp: 
+//  dp[0] = 1
+//  dp[i] = 
+
+
 class Solution {
     public int nthUglyNumber(int n) {
 		if (n <= 0) {
@@ -44,5 +50,26 @@ class Solution {
 		}
 
 		return ugly[n - 1];
+	}
+	
+
+	// 264. Ugly Number II
+
+	// pq: need to get rid of duplicate values
+
+
+    public int nthUglyNumber2(int n) {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        pq.offer(1L);
+        while (n > 1) {
+            long curr = pq.poll();
+            while (!pq.isEmpty() && pq.peek() == curr) pq.poll();
+            pq.offer(curr * 2);
+            pq.offer(curr * 3);
+            pq.offer(curr * 5);
+            n--;
+        }
+        
+        return pq.peek().intValue();
     }
 }
