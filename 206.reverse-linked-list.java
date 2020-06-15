@@ -39,20 +39,28 @@
  * }
  */
 class Solution {
+    // recursive
     public ListNode reverseList(ListNode head) {
-        public ListNode reverseList(ListNode head) {
-            ListNode prev = null;
-            
-            while (head != null) {
-                ListNode next = head.next;
-                head.next = prev;
-                prev = head;
-                head = next;
-            }
-            
-            return prev;
-        }
+        if (head == null || head.next == null) return head;
+        ListNode last = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return last;
     }
+
+    public ListNode reverseList_Iterative(ListNode head) {
+        ListNode prev = null;
+        
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        
+        return prev;
+    }
+    
 }
 // @lc code=end
 

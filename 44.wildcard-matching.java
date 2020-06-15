@@ -30,6 +30,14 @@
  * isMatch("aab", "c*a*b") → false
  * 
  */
+
+// match is mean delete the matched character(s) from S or/and P
+// pay attention how to init FIRST line
+// for p =   * a * b
+//         0 1 2 3 4
+//         T T F F F
+//           ^
+
 class Solution {
     public boolean isMatch(String s, String p) {
 		int m = s.length();
