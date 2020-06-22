@@ -65,32 +65,44 @@ import java.util.Queue;
 
 // @lc code=start
 class Solution {
-    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-        if (rooms == null || rooms.size() == 0) return false;
 
-        int n = rooms.size();
-        boolean visited[] = new boolean[n];
+    // BFS
+    
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        if (rooms.size() == 0) return false;
+
+        Set<Integer> visited = new HashSet<>();
         Queue<Integer> q = new LinkedList<>();
-        visited[0] = true;
-        for (int key : rooms.get(0)) {
-            q.offer(key);
-        }
+        q.offer(0);
+        visited.add(0);
 
         while (!q.isEmpty()) {
             int room = q.poll();
-            if (!visited[room]) {
-                visited[room] = true;
-                for (int key : rooms.get(room)) {
-                    q.offer(key);
-                }
+            for (int key : rooms.get(room)) {
+                if (visited.contains(key)) continue;
+                q.offer(key);
+                visited.add(key);
             }
         }
 
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) return false;
-        }
+        return visited.size() == rooms.size();
+    }
 
-        return true;
+    // dfs
+
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        int n = rooms.size();
+        Set<Integer> visited = new HashSet<>();
+        dfs(rooms, 0, visited);
+        return visited.size() == n;
+    }
+    
+    private void dfs(List<List<Integer>> rooms, int index, Set<Integer> visited) {
+        visited.add(index);
+        for (int nei : rooms.get(index)) {
+            if (visited.contains(nei)) continue;
+            dfs(rooms, nei, visited);
+        }
     }
 }
 // @lc code=end

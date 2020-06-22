@@ -59,45 +59,38 @@ import java.util.Queue;
  * 
  */
 
-// @lc code=start
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if (numCourses == 0) return true;
-
         int[] indegree = new int[numCourses];
-        List<Integer>[] dependants = (List<Integer>[]) new List[numCourses];
-        for (int i = 0; i < numCourses; i++) dependants[i] = new ArrayList<>();
-        
-        for (int[] prerequisite : prerequisites) {
-            indegree[prerequisite[0]]++;
-            dependants[prerequisite[1]].add(prerequisite[0]);
+        Map<Integer, List<Integer>> dependants = new HashMap<>();
+        for (int[] pre : prerequisites) {
+            indegree[pre[0]]++;
+            dependants.putIfAbsent(pre[1], new ArrayList<Integer>());
+            dependants.get(pre[1]).add(pre[0]);
         }
-
-        Set<Integer> visited = new HashSet<>();
+        
         Queue<Integer> q = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
+        int cnt = numCourses;
+        for (int i = 0; i < numCourses; i++) {   // iterate through couser number, not value of indgree.
             if (indegree[i] == 0) {
-                visited.add(i);
-                q.add(i);
+                q.offer(i);
+                cnt--;
             }
         }
-
+        
         while(!q.isEmpty()) {
             int course = q.poll();
-            
-            for (int dependant : dependants[course]) {
-                if (!visited.contains(dependant)) {
-                    indegree[dependant]--;
-                    if (indegree[dependant] == 0) {
-                        visited.add(dependant);
-                        q.offer(dependant);
-                    } 
+            if (!dependants.containsKey(course)) continue;
+            for (int dep : dependants.get(course)) {
+                indegree[dep]--;
+                if (indegree[dep] == 0) {
+                    q.offer(dep);
+                    cnt--;
                 }
             }
         }
-
-        return visited.size() == numCourses;
-
+        
+        return cnt == 0;
     }
 }
 // @lc code=end

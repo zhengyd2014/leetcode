@@ -83,10 +83,44 @@
  */
 
 // @lc code=start
+
+
+// note: need to check "if (N > 0)"" in the while loop
+
 class Solution {
     public int[] prisonAfterNDays(int[] cells, int N) {
+        Map<String, Integer> states = new HashMap<>();
         
+        while (N > 0) {
+            String state = Arrays.toString(cells);
+            if (states.containsKey(state)) {
+                N %= states.get(state) - N;
+            } else {
+                states.put(state, N);
+            }
+            
+            if (N > 0) {           // important, as N maybe 0 after fast-forward
+                cells = nextDay(cells);
+                N--;
+            }
+        }
+        
+        return cells;
     }
+    
+    
+    private int[] nextDay(int[] cells) {
+        int[] ans = new int[cells.length];
+        ans[0] = 0;
+        for (int i = 1; i < cells.length - 1; i++) {
+            if (cells[i-1] == cells[i+1]) ans[i] = 1;
+            else ans[i] = 0;
+        }
+        ans[cells.length-1] = 0;
+        return ans;
+    }
+    
 }
+
 // @lc code=end
 

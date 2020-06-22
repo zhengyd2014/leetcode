@@ -48,32 +48,30 @@
 class Solution {
 
     // recursive: *global* variable i to record progress.
-        int i = 0;
-        public String decodeString(String s) {
-            int num = 0;
-            String curr = "";
-    
-            while (i < s.length()) {
-                char c = s.charAt(i++);
-                if (c >= '0' && c <= '9') {
-                    num = num * 10 + c - '0';
-                } else if (c == '[') {
-                    String sub = decodeString(s);
-                    StringBuilder sb = new StringBuilder();
-                    for (int j = 0; j < num; j++) {
-                        sb.append(sub);
-                    }
-                    curr += sb.toString();
-                    num = 0;
-                } else if (c == ']') {
-                    break;
-                } else {
-                    curr += c;
+    int j = 0;
+    public String decodeString(String s) {
+        int num = 0;
+        StringBuilder sb = new StringBuilder();
+        
+        while (j < s.length()) {
+            char c = s.charAt(j++);
+            if (c >= '0' && c <= '9') {
+                num = num * 10 + c - '0';
+            } else if (c == '[') {
+                String sub = decodeString(s);
+                for (int i = 0; i < num; i++) {
+                    sb.append(sub);
                 }
+                num = 0;
+            } else if (c == ']') {
+                break;
+            } else {
+                sb.append(c);
             }
-    
-            return curr;
         }
+        
+        return sb.toString();
+    }
         
         
     // iterative
